@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+
+<!--    目标对象-->
+    <bean id="studentDao" class="com.sy.demo1.StudentDaoImpl"/>
+
+<!--    要增强的代码-->
+    <bean id="myAdvice" class="com.sy.demo1.MyAdvice"/>
+
+
+<!--    切面-->
+    <bean id="advisor" class="org.springframework.aop.support.RegexpMethodPointcutAdvisor">
+        <property name="pattern" value=".*save"/>
+        <property name="advice" ref="myAdvice"/>
+    </bean>
+
+<!--        <bean class="org.springframework.aop.framework.autoproxy.BeanNameAutoProxyCreator">-->
+<!--            <property name="interceptorNames" value="advisor"/>-->
+<!--            <property name="beanNames" value="studentDao"/>-->
+<!--        </bean>-->
+
+
+    <bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator"/>
+
+<!--    代理对象-->
+<!--    <bean id="userDaoProxy" class="org.springframework.aop.framework.ProxyFactoryBean">-->
+<!--        <property name="target" ref="studentDao"></property>-->
+<!--        <property name="interfaces" value="com.sy.demo1.StudentDao"></property>-->
+<!--        <property name="interceptorNames" value="advisor"></property>-->
+<!--    </bean>-->
+</beans>
